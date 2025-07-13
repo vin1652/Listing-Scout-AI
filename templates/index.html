@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Apartment Scout</title>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; }
+    input[type="text"] { width: 400px; padding: 0.5rem; }
+    input[type="submit"] { padding: 0.5rem 1rem; }
+    .listing { border-bottom: 1px solid #ccc; margin-top: 1rem; padding-bottom: 1rem; }
+  </style>
+</head>
+<body>
+  <h1>🏡 Apartment Listing Scout</h1>
+  <form method="post" action="/search">
+    <input type="text" name="query" placeholder="e.g., 2-bedroom near McGill under $1500" required>
+    <input type="submit" value="Search">
+  </form>
+
+  {% if query %}
+    <h2>Results for: "{{ query }}"</h2>
+    <p><strong>Top Recommendation:</strong> {{ analysis }}</p>
+
+    {% for l in listings %}
+      <div class="listing">
+        <h3>{{ l.title }}</h3>
+        <p><a href="{{ l.url }}" target="_blank">{{ l.url }}</a></p>
+        <p><strong>Price:</strong> {{ l.price }} | <strong>Bedrooms:</strong> {{ l.bedrooms }}</p>
+        <p><strong>Location:</strong> {{ l.location }}</p>
+        <p><strong>Amenities:</strong> {{ ", ".join(l.amenities) }}</p>
+        <p><strong>Contact:</strong> {{ l.contact_info }}</p>
+        <p><strong>Summary:</strong> {{ l.description }}</p>
+      </div>
+    {% endfor %}
+  {% endif %}
+</body>
+</html>
